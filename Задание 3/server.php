@@ -1,59 +1,81 @@
 <?php
 	try{
 
-		$user = 'u52862';
+		$user = 'u52862'; 
 		$password = '5476105';
 		$database = new PDO('mysql:host=localhost;dbname=u52862', $user, $password, [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    
+    if(empty($_POST['name']) == false) 
+    {
+      $userName = $_POST['name']; 
+      if((!preg_match('/^[а-яёА-ЯЁ]+$/u', $userName) && !preg_match('/^[a-zA-Z]+$/u', $userName))) exit ("Имя должно быть написано в одно слово, без пробелов, и содержать только буквы русского или латинского алфавита!");
+      else if (strlen($userName) < 5) exit ("Имя должно состоять минимум из 5 букв!");
+    }
+    else exit ("Поле \"Имя\" не должно быть пустым!");
 
-		if (empty($_POST['name'])) exit ("Поле \"Имя\" не должно быть пустым!");
+    //!preg_match("/^[а-яА-Я]+[а-яА-Я]+[а-яА-Я]*$/u", $name)
+		//if (empty($_POST['name'])) exit ("Поле \"Имя\" не должно быть пустым!");
+
+    if (empty($_POST['email']) == false) //не пусто 
+    {
+      if(!preg_match('/^(?:[a-z0-9]+(?:[-_.]?[a-z0-9]+)?@[a-z0-9_.-]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i', $_POST['email'])) exit("Введите коректную почту в формате: email12345@example.org");
+    }
+    else exit ("Поле \"Почта\" не должно быть пустым!");
 
     //дата
-    function validateDate($date, $format = 'Y-m-d')
+    if(empty($_POST['date']) == false) //не пусто
     {
-      $d = DateTime::createFromFormat($format, $date);
-      return $d && $d -> format($format) == $date;
+      function validateDate($date, $format = 'Y-m-d')
+      {
+        $d = DateTime::createFromFormat($format, $date);
+        return $d && $d -> format($format) == $date;
+      }
+      if (var_dump(validateDate($_POST['date'])) == false)
+      {
+        $dateErr = "Введите корректную Дату!";
+      }
     }
-    if (var_dump(validateDate($_POST['date'])) == false)
-    {
-      $dateErr = "Введите корректную Дату!";
-    }
+    else exit("Выбирите дату рождения!");
 
     //пол
-    if ($_POST['gender'] == 'male'||'female' || 'other')
+    if (empty($_POST['gender']) == false) //не пусто
     {
-      $gender = ($_POST['gender']);
+      if ($_POST['gender'] == 'male'||'female' || 'other')
+      {
+        $gender = ($_POST['gender']);
+      }
+      else exit ("Выберите коректный Пол!!");
     }
-    else if ($_POST['gender'] == null)
-    {
-      $genderErr = "Выберите Пол!";
-    }
-
+    else exit ("Выберите Пол!!");
+    
+      
     //конечности
-    if ($_POST['limbCount'] == '1' || '2' || '3' || '4')
-    {
-      $limb = ($_POST['limbCount']);
+    if (empty($_POST['limbCount']) == false) //не пусто
+    { 
+      if ($_POST['limbCount'] == '1' || '2' || '3' || '4')
+      {
+        $limbCount = ($_POST['limbCount']);
+      }
+      else exit ("Выберите коректное кол-во Конечностей!!");
     }
-    else if ($_POST['limbCount'] == null)
-    {
-      $limbErr = "Выберите Кол-во Конечностей!";
-    }
+    else exit ("Выберите кол-во конечностей!!");
+    
 
 		//Цвета
-    $colors = (int) $_POST['Colors'];
-    if ($colors < 1 || $colors > 5)
-    {
-      $colorsErr = "Выберите ваш(и) любимый(е) цвет(а)!";
+    if (empty($_POST['Colors']) == false){
+      $colors = (int) $_POST['Colors'];
+      if ($colors < 1 || $colors > 5)
+      {
+        exit("Выберите ваш(и) любимый(е) цвет(а)!");
+      }  
     }
-    if ($colors == null)
-    {
-      exit("Выберите ваш(и) любимый(е) цвет(а)!");
-    }
+    else exit("Выберите ваш(и) любимый(е) цвет(а)!");
 
 		//биография
     if (empty($_POST['biography'])) exit ("Поле \"Расскажите о себе\" не должно быть пустым!");
 
 		//Чекбокс
-    if ($_POST['contract'] == null) exit ("Ознакомтесь с контрактом!");
+    if (empty($_POST['contract'])) exit ("Ознакомтесь с контрактом!");
 
 
 		$statement = $database -> prepare("INSERT INTO User (name, email, date, gender, limbCount, biography) VALUES(:name, :email, :date, :gender, :limbCount, :biography)");
