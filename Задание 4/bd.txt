@@ -1,0 +1,70 @@
+CREATE TABLE User(
+user_id int(10) unsigned NOT NULL AUTO_INCREMENT,
+name tinytext NOT NULL,
+email tinytext NOT NULL,
+date date NOT NULL,
+gender tinytext NOT NULL,
+limbCount tinyint NOT NULL,
+biography tinytext NOT NULL,
+PRIMARY KEY (user_id)
+);
+
+CREATE TABLE Connecter(
+conect_id int(10) unsigned NOT NULL AUTO_INCREMENT,
+user_id int(10) unsigned NOT NULL,
+color_id int(10) unsigned NOT NULL,
+PRIMARY KEY (conect_id)
+);
+
+CREATE TABLE Colors(
+color_id int(10) unsigned NOT NULL AUTO_INCREMENT,
+favoritColor tinytext NOT NULL,
+PRIMARY KEY (color_id)
+);
+
+INSERT INTO Colors SET favoritColor = 'purple';
+INSERT INTO Colors SET favoritColor = 'green';
+INSERT INTO Colors SET favoritColor = 'blue';
+INSERT INTO Colors SET favoritColor = 'brown';
+INSERT INTO Colors SET favoritColor = 'beige';
+
+
+1. Создать таблицу
+
+CREATE TABLE <название> (
+id int(10) unsigned NOT NULL AUTO_INCREMENT, //колонка id будет сама заполняться, и по ней мы будем искать записи
+name varchar(128) NOT NULL DEFAULT '', //создали колонку "name", где храним определённые записи
+PRIMARY KEY (id)
+);
+
+2. Показать список таблиц
+
+show tables;
+
+3. Показать структуру таблицы
+
+desc <название>;
+
+4. Удалить таблицу
+
+drop table <название>;
+
+5. Вставить запись
+
+INSERT INTO <название> SET name = 'name';
+
+6. Выбрать все записи
+
+SELECT * FROM <название>;
+
+7. Обновить запись
+
+UPDATE <название> SET name = 'name name' WHERE id = 1;
+
+8. Удалить запись
+
+DELETE FROM <название> WHERE id = 1;
+
+9. Очистить таблицу
+
+DELETE FROM <название>;
