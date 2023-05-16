@@ -47,14 +47,14 @@
         <?php
         if (!empty($_GET['none']))
         {
-            $message = "Неверные данные!";
-            print($message);
+          $message = "Неверные данные!";
+          print($message);
         }
     }
 
     else
     {
-        $user = 'u52862'; 
+      $user = 'u52862'; 
       $password = '5476105';
       $database = new PDO('mysql:host=localhost;dbname=u52862', $user, $password, [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
@@ -66,15 +66,15 @@
 
         if ($user_id)
         {
-            $_SESSION['login'] = $_POST['User_Login'];
+            $_SESSION['login'] = $_POST['user_login'];
             $_SESSION['uid'] = $user_id;
-            $_COOKIE[session_name()] = "session_true";
+            $_COOKIE['debug_' . session_name()] = "session_true";
             header('Location: ./');
         }
 
         else
         {
-            header('Location: ./');
+          header('Location: error.php');
         }
     }
 ?>

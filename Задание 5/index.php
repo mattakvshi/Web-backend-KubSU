@@ -10,6 +10,7 @@
 
       // Массив для временного хранения сообщений пользователю.
       $messages = array();
+      $warnings = array();
 
       // В суперглобальном массиве $_COOKIE PHP хранит все имена и значения куки текущего запроса.
       // Выдаем сообщение об успешном сохранении.
@@ -19,10 +20,10 @@
         setcookie('login', '', time() + 60 * 60 * 24);
         setcookie('password', '', time() + 60 * 60 * 24);
         // Если есть параметр save, то выводим сообщение пользователю.
-        $messages[] = '<div class="error_message"> Спасибо, результаты сохранены.</div>';
+        $warnings[] = '<div class="error_message"> Спасибо, результаты сохранены.</div>';
         if (!empty($_COOKIE['password']))
         {
-          $messages[] = sprintf('<div class="error_message"> Вы можете войти с логином и паролем для изменения данных:</div>
+          $warnings[] = sprintf('<div class="error_message"> Вы можете войти с логином и паролем для изменения данных:</div>
           <div class="error_message">Логин: <strong>%s</strong>.</div>
           <div class="error_message">Пароль: <strong>%s</strong>.</div>
           <div class="avt_bl3"><a href = "login.php" class = "btn">Войти</a></div>',
@@ -110,10 +111,15 @@
         $values['date'] = $line['date'];
         $values['gender'] = $line['gender'];
         $values['limbCount'] = $line['limbCount'];
-        $values['Colors'] = $line['Colors'];
+        //$values['Colors'] = $line['Colors'];
         $values['biography'] = $line['biography'];
-        $values['contract'] = $line['contract'];
-        $messages[] = 'Вход с логином %s, uid %d';
+        $values['contract'] = empty($_COOKIE['contract_value']) ? '' : $_COOKIE['contract_value'];
+        sprintf('<div class="error_message">Авторизация прошла успешно!</div>
+          <div class="error_message">Логин: <strong>%s</strong>.</div>
+          <div class="error_message">Номер пользователя: <strong>%s</strong>.</div>',
+          strip_tags($_SESSION['login']),
+          strip_tags($_SESSION['uid'])
+          );
       }
       else {
         // Складываем предыдущие значения полей в массив, если есть.
@@ -126,6 +132,7 @@
         $values['Colors'] = empty($_COOKIE['Colors_value']) ? '' : $_COOKIE['Colors_value'];
         $values['biography'] = empty($_COOKIE['biography_value']) ? '' : $_COOKIE['biography_value'];
         $values['contract'] = empty($_COOKIE['contract_value']) ? '' : $_COOKIE['contract_value'];
+        print('<div class="warning_down_outOf"><div class="warning_down"><div class="warning_message">ПРЕДУПРЕЖДЕНИЕ: Вы не авторизованны!</div></div></div>');
       }
 
       // Включаем содержимое файла form.php.
@@ -335,7 +342,7 @@
       if (!empty($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login']))
       {
         $statement = $database -> prepare("UPDATE User SET name = ?, email = ?, date = ?, gender = ?, limbCount = ?, biography = ? WHERE user_id = ?");
-        $statement -> execute([$_POST['name']], [$_POST['email']], [$_POST['date']], [$_POST['gender']], [$_POST['limbCount']], [$_POST['biography']], $_SESSION['uid']);
+        $statement -> execute([$_POST['name'], $_POST['email'], $_POST['date'], $_POST['gender'], $_POST['limbCount'], $_POST['biography'], $_SESSION['uid']]);
         $statement_sup = $database -> prepare("INSERT INTO Connecter SET user_id = ?, color_id = ?");
         foreach($_POST['Colors'] as $colors)
         $statement_sup -> execute($_SESSION['uid'], $colors);
@@ -343,7 +350,7 @@
       else
       {
         $user_login = uniqid('', true);
-        $user_password = rand(1, 1000);
+        $user_password = rand(999, 10000);
         setcookie('login', $user_login);
         setcookie('password', $user_password);
 

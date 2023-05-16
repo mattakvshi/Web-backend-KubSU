@@ -23,13 +23,21 @@ if (!empty($messages)) {
   }
   print('</div>');
 }
+else if (!empty($warnings)){
+	print('<div class="warning" id="messages">');
+  // Выводим все сообщения.
+  foreach ($warnings as $warning) {
+    print($warning);
+  }
+  print('</div>');
+}
 
 // Далее выводим форму отмечая элементы с ошибками классом error
 // и задавая начальные значения элементов ранее сохраненными.
 ?>
 <div class = "avt_bl1">
 	<div class ="avt_bl2">
-		<a href = "login.php" class = "btn">Зарегистрироваться</a>
+		<a href = "login.php" class = "btn">Авторизоваться</a>
 			<?php
 				if (!empty($messages))
 				{
