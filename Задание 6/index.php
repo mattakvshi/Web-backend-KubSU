@@ -94,8 +94,7 @@
         setcookie('contract_error', '', 100000);
         $messages[] = '<div class="error_message"> Ознакомтесь с контрактом!</div>';
       }
-
-
+      
       if (!empty($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login']))
       {
         $user = 'u52862'; 
@@ -114,12 +113,20 @@
         //$values['Colors'] = $line['Colors'];
         $values['biography'] = $line['biography'];
         $values['contract'] = empty($_COOKIE['contract_value']) ? '' : $_COOKIE['contract_value'];
-        sprintf('<div class="error_message">Авторизация прошла успешно!</div>
+        if($_SESSION['login'] == 'Admin')
+        {
+          $warnings[] = sprintf('<div class="error_message">Вы зашли как администратор!</div>
+          <div class="error_message">Вы можете изменить любое поле в форме.</div>
+          <div class="error_message">Новые данные заменят старые в базе данных.</div>'
+          );
+        }else{
+          $warnings[] = sprintf('<div class="error_message">Авторизация прошла успешно!</div>
           <div class="error_message">Логин: <strong>%s</strong>.</div>
           <div class="error_message">Номер пользователя: <strong>%s</strong>.</div>',
           strip_tags($_SESSION['login']),
           strip_tags($_SESSION['uid'])
           );
+        }
       }
       else {
         // Складываем предыдущие значения полей в массив, если есть.

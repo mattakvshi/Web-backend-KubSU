@@ -47,6 +47,11 @@ else if (!empty($warnings)){
 			?>
 	</div>
 </div>
+<div class = "avt_bl4">
+	<div class ="avt_bl5">
+		<a href = "admin.php" class = "btn">Администрирование</a>
+	</div>
+</div>
 
 		<div class="container">
 			<form action="" method="POST">
@@ -137,12 +142,12 @@ else if (!empty($warnings)){
 						name="biography"
 						style="margin: 0px; height: 120px; width: 250px"
 						placeholder="Расскажите о себе..."
-						<?php if ($errors['biography']) {print 'class="error"';} ?> <?php print $values['biography']; ?>
-					></textarea></label
+						<?php if ($errors['biography']) {print 'class="error"';} ?> 
+					><?php print $values['biography']; ?></textarea></label
 				><br />
 
 				<label  <?php if ($errors['contract']) {print 'class="txtb_error"';} else {print 'class="txtb"';} ?>
-					><input name="contract" type="checkbox" <?php if ($values['contract'] == 'checked') {print "checked";} ?>/>С контрактом
+					><input name="contract" type="checkbox" <?php if ($values['contract'] == 'checked') {print 'checked = "checked"';} ?>/>С контрактом
 					ознакомлен(а)</label
 				><br />
 
