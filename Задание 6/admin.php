@@ -42,39 +42,104 @@
         <body>
             <div class="container" style = "width: 80%">
               <form action = "" method = "POST">
-                <p>Администрирование базы данных</p>
-                <div class ="slideBlok" style = "width: 100%;height: 600px;overflow-y: auto;" >
+                <p style ="font-size: 2rem; font-weight: 600;">Администрирование базы данных</p>
+                <div class = "adm_block" style = "width: 100%;height: 600px;overflow-y: auto;" >
                 <?php
                   $result = $database -> query("SELECT * FROM User");
-                  echo '<p style ="margin-bottom: 20px">Данные пользователей</p>';
-                  echo '<p style ="margin-bottom: 20px">o o o</p>';
-                  while ($row = $result -> fetch())
-                  {
-                    echo '<p style = "margin-bottom: 5px;">'.$row['user_id'].' | '.$row['name'].' | '.$row['email'].' | '.$row['date'].' | '.$row['gender'].' | '.$row['limbCount'].' | '.$row['biography'].'</p>';
+                  echo '<p style ="margin-bottom: 20px; font-size: 2rem; font-weight: 600;">Данные пользователей</p>';
+                  ?>
+                  <table>
+                    <thead>
+                      <tr class = "main">
+                        <th>Номер</th>
+                        <th>Имя</th>
+                        <th>Почта</th>
+                        <th>Дата</th>
+                        <th>Пол</th>
+                        <th>Кол-во конечностей</th>
+                        <th>Биография</th>
+                        <th>Удаление</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      while ($row = $result -> fetch())
+                      {
+                        echo '<tr class = "str">
+                        <td>'.$row["user_id"]."</td> 
+                        <td>".$row["name"]."</td>
+                        <td>".$row["email"]."</td>
+                        <td>".$row["date"]."</td>
+                        <td>".$row["gender"]."</td>
+                        <td>".$row["limbCount"]."</td>
+                        <td>".$row["biography"]."</td>
+                        <td>
+                        <a href='delete.php?rn=".$row["user_id"]."'class='btn error' style='padding: 0.5em;'>удалить</a>
+                        </td>
+                        </tr>";
+                        //echo '<p style = "margin-bottom: 5px;">'.$row['user_id'].' | '.$row['name'].' | '.$row['email'].' | '.$row['date'].' | '.$row['gender'].' | '.$row['limbCount'].' | '.$row['biography'].'</p>';
+                      }
+                      echo '</tr>';
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
+                <div class = "adm_block">
+                <?php
+                  echo '<p style ="font-size: 2rem; font-weight: 600; margin-bottom: 20px; margin-top: 60px;">Статистика</p>';
+                  $result1 = $database -> query("SELECT * FROM Connecter WHERE color_id = 1");
+                  $result2 = $database -> query("SELECT * FROM Connecter WHERE color_id = 2");
+                  $result3 = $database -> query("SELECT * FROM Connecter WHERE color_id = 3");
+                  $result4 = $database -> query("SELECT * FROM Connecter WHERE color_id = 4");
+                  $result5 = $database -> query("SELECT * FROM Connecter WHERE color_id = 5");
+                  $result6 = $database -> query("SELECT * FROM Connecter");
+                  $row1 = 0;
+                  $row2 = 0;
+                  $row3 = 0;
+                  $row4 = 0;
+                  $row5 = 0;
+                  $row6 = 0;
+                  while($rowCount = $result1 -> fetch()){
+                    if($rowCount['color_id'] == 1){
+                      $row1++;
+                    }
                   }
-                  echo '<p style ="margin-bottom: 20px margin-top: 60px">Статистика</p>';
-                  echo '<p style ="margin-bottom: 20px">о о о</p>';
-                  $result1 = $database -> query("SELECT COUNT(*) FROM Connecter WHERE color_id = 1");
-                  $result2 = $database -> query("SELECT COUNT(*) FROM Connecter WHERE color_id = 2");
-                  $result3 = $database -> query("SELECT COUNT(*) FROM Connecter WHERE color_id = 3");
-                  $result4 = $database -> query("SELECT COUNT(*) FROM Connecter WHERE color_id = 4");
-                  $result5 = $database -> query("SELECT COUNT(*) FROM Connecter WHERE color_id = 5");
-                  $result6 = $database -> query("SELECT COUNT(*) FROM Connecter");
-                  $row1 = $result1 -> rowCount();
-                  $row2 = $result2 -> rowCount();
-                  $row3 = $result3 -> rowCount();
-                  $row4 = $result4 -> rowCount();
-                  $row5 = $result4 -> rowCount();
-                  $row6 = $result6 -> rowCount();
-                  echo '<p style = "margin-bottom: 5px;">Всего пользователей с любимыми цветами - '.$row6.'<p>';
-                  echo '<p style = "margin-bottom: 5px;">Фиолетовый - '.$row1.'</p>';
-                  echo '<p style = "margin-bottom: 5px;">Зелёный - '.$row2.'<p>';
-                  echo '<p style = "margin-bottom: 5px;">Голубой - '.$row3.'<p>';
-                  echo '<p style = "margin-bottom: 5px;">Коричневый - '.$row4.'<p>';
-                  echo '<p style = "margin-bottom: 5px;">Бежевый - '.$row5.'<p>';
+                  while($rowCount = $result2 -> fetch()){
+                    if($rowCount['color_id'] == 2){
+                      $row2++;
+                    }
+                  }
+                  while($rowCount = $result3 -> fetch()){
+                    if($rowCount['color_id'] == 3){
+                      $row3++;
+                    }
+                  }
+                  while($rowCount = $result4 -> fetch()){
+                    if($rowCount['color_id'] == 4){
+                      $row4++;
+                    }
+                  }
+                  while($rowCount = $result5 -> fetch()){
+                    if($rowCount['color_id'] == 5){
+                      $row5++;
+                    }
+                  }
+                  while($rowCount = $result6 -> fetch()){
+                    if($rowCount['color_id'] == 1 || 2 || 3 || 4 || 5){
+                      $row6++;
+                    }
+                  }
+                  echo "<table>";
+                  echo '<tr class = "str"><td><p style = "margin-bottom: 5px;">Всего цветов в таблице - '.$row6.'</p></td></tr>';
+                  echo '<tr class = "str"><td><p style = "margin-bottom: 5px;">Фиолетовый - '.$row1.'</p></td></tr>';
+                  echo '<tr class = "str"><td><p style = "margin-bottom: 5px;">Зелёный - '.$row2.'</p></td></tr>';
+                  echo '<tr class = "str"><td><p style = "margin-bottom: 5px;">Голубой - '.$row3.'</p></td></tr>';
+                  echo '<tr class = "str"><td><p style = "margin-bottom: 5px;">Коричневый - '.$row4.'</p></td></tr>';
+                  echo '<tr class = "str"><td><p style = "margin-bottom: 5px;">Бежевый - '.$row5.'</p></td></tr>';
+                  echo "</table>";
                   
                 ?>
-                </div>
+                </div><br /><br />
                 <input name = "User_Record" type = "text" placeholder = "Введите номер пользователя" style = "width: 70%"><br />
                 <input type = "submit" name = "submit" value = "Редактировать">
               </form>

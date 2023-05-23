@@ -29,21 +29,6 @@ body {
 	margin-right: 1em;
 	height: 40px;
 }
-.avt_bl4 {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 200px;
-}
-
-.avt_bl5 {
-	width: 170px;
-	height: 55px;
-	margin-top: 5rem;
-	margin-left: auto;
-	margin-right: 0.5em;
-}
 
 a {
 	text-decoration: none;
@@ -389,10 +374,45 @@ form:hover {
 	color: #666;
 }
 
-.slideBlok {
-	background: rgba(255, 255, 255, 0.3);
-	-webkit-backdrop-filter: blur(10px);
-	backdrop-filter: blur(10px);
+table {
+	font-family: Montserrat, sans-serif;
+	text-align: center;
+	border-collapse: collapse;
+}
+
+.adm_block {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.main {
+	border-top: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.str {
+	border-top: 1px solid rgba(255, 255, 255, 0.5);
+	transition: 0.5s;
+}
+
+.str:hover {
+	background-color: rgba(255, 255, 255, 0.5);
+	color: #666;
+}
+
+th {
+	font-weight: 300;
+	padding: 5px 15px;
+	color: rgba(255, 255, 255, 0.5);
+	text-transform: uppercase;
+	font-size: 15px;
+}
+
+td {
+	font-size: 18px;
+	padding: 15px 15px;
+	color: #efefef;
 }
 
 .message {

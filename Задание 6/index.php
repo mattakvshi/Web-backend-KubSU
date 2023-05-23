@@ -24,11 +24,11 @@
         if (!empty($_COOKIE['password']))
         {
           $warnings[] = sprintf('<div class="error_message"> Вы можете войти с логином и паролем для изменения данных:</div>
-          <div class="error_message">Логин: <strong>%s</strong>.</div>
-          <div class="error_message">Пароль: <strong>%s</strong>.</div>
+          <div class="error_message"style="z-index:  100;"><p>Пароль: <strong>%s</strong>.</p></div>
+          <div class="error_message" style="z-index:  100;"><p>Логин: <strong>%s</strong>.</p></div>
           <div class="avt_bl3"><a href = "login.php" class = "btn">Войти</a></div>',
-          strip_tags($_COOKIE['login']),
-          strip_tags($_COOKIE['password'])
+          strip_tags($_COOKIE['password']),
+          strip_tags($_COOKIE['login'])
           );
         }
       }

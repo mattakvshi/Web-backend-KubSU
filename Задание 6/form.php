@@ -36,8 +36,8 @@ else if (!empty($warnings)){
 // и задавая начальные значения элементов ранее сохраненными.
 ?>
 <div class = "avt_bl1">
-	<div class ="avt_bl2">
-		<a href = "login.php" class = "btn">Авторизоваться</a>
+	<div class ="avt_bl2" style = "height: 40px">
+		<a href = "login.php" class = "btn">Авторизоваться</a><br/>
 			<?php
 				if (!empty($messages))
 				{
@@ -46,13 +46,10 @@ else if (!empty($warnings)){
 				}
 			?>
 	</div>
-</div>
-<div class = "avt_bl4">
-	<div class ="avt_bl5">
+	<div class ="avt_bl2" style = "margin-right: 3.3rem">
 		<a href = "admin.php" class = "btn">Администрирование</a>
 	</div>
 </div>
-
 		<div class="container">
 			<form action="" method="POST">
 				<p>Форма</p>
